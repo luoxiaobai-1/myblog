@@ -1,0 +1,93 @@
+server:
+  port: 7777
+
+spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
+  datasource:
+    url: jdbc:mysql://:3306/sg_blog
+    username: root
+    password:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    druid:
+      #初始化连接池大小
+      initialSize: 10
+      #最大空闲值.当经过一个高峰时间后，连接池可以慢慢将已经用不到的连接慢慢释放一部分，一直减少到maxIdle为止
+      minIdle: 1
+      #最大活跃数
+      maxActive: 50
+      #最大建立连接等待时间。如果超过此时间将接到异常。设为－1表示无限制
+      maxWait: 60000
+      #失效检查线程运行时间间隔，要小于MySQL默认
+      timeBetweenEvictionRunsMillis: 60000
+      #连接的超时时间，默认为半小时
+      minEvictableIdleTimeMillis: 300000
+      #检查连接有效性的SQL语句
+      validationQuery: SELECT 1 FROM dual
+      #检查连接是否有效
+      testWhileIdle: true
+      testOnBorrow: true
+      testOnReturn: false
+      #开启池的prepared statement 池功能
+      poolPreparedStatements: false
+      #statement池能够同时分配的打开的statements的最大数量
+      maxOpenPreparedStatements: 50
+      #开启StatFilter
+      filter:
+        stat:
+          enabled: true
+          log-slow-sql: true
+          slow-sql-millis: 1000
+          #开启Slf4jFilter,使用logback时注释
+          #slf4j:
+          #enabled: true
+          #data-source-log-enabled: false
+          #connection-log-enabled: false
+          #statement-log-enabled: false
+          #result-set-log-enabled: false
+        #开启WallFilter
+        wall:
+          enabled: true
+          log-violation: true
+          throw-exception: false
+          config:
+            delete-where-none-check: true
+      #开启Web监控
+      web-stat-filter:
+        enabled: true
+        exclusions: /druid/*,*.js,*.gif,*.jpg,*.bmp,*.png,*.css,*.ico
+        url-pattern: /*
+      #开启监控页面
+      stat-view-servlet:
+        enabled: true
+        login-username: admin
+        login-password: admin123
+
+
+
+  servlet:
+    multipart:
+      max-file-size: 2MB
+      max-request-size: 2MB
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      id-type: auto
+      logic-delete-field: delFlag
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+      mapper-locations: classpath:mapper/*.xml
+#pagehelper:
+#  helper-dialect: mysql	#使用的数据库. mysql, oracle, sqlite
+#  reasonable: true #开启优化,在分页页码结果没有数据的时候,会显示有数据的页码数据,也就是当当前页<1时,返回第 1 页, 当当前页 > 最大页时, 返回最后一页的数据.
+#  support-methods-arguments: true #是否支持接口参数来传递分页参数，默认false
+#  pageSizeZero: false #表示当 pageSize=0 时返回所有
+#  params: count=countSql
+oss:
+  accessKey: GD1DnkxGoVWj3KIXrrmI4lpVZF01gmjTGP3ifI4b
+  secretKey: gnrG0ToxQ_-o6gw3tM1Xl7UHKVPhu6LsGMq7RReU
+  bucket: luoxiaobai
+  webpath: http://rtv65oorx.hn-bkt.clouddn.com

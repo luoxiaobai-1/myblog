@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="my.blog.mapper.ArticleTagMapper">
+
+    <resultMap id="BaseResultMap" type="my.blog.domain.entity.ArticleTag">
+            <id property="articleId" column="article_id" jdbcType="BIGINT"/>
+            <id property="tagId" column="tag_id" jdbcType="BIGINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        article_id,tag_id
+    </sql>
+    <update id="updatetagbyid">
+        update sg_article_tag set tag_id=#{article}
+        where  article_id=#{tag}
+    </update>
+    <delete id="removebyarticle">
+        delete from sg_article_tag
+        where article_id=#{article}
+    </delete>
+
+</mapper>

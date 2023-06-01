@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="my.blog.mapper.LinkMapper">
+
+
+
+    <update id="deleteByIds">
+        update  sg_link set del_flag=${@my.blog.Constants.SystemConstants@LOGIC_DELETE_VALUE},update_by=#{personid},update_time=#{time}
+
+        where id
+        in
+        <foreach collection="id" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+
+    </update>
+</mapper>

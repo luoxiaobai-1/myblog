@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="my.blog.mapper.ArticleMapper">
+    <update id="deleteByIds">
+update  sg_article set del_flag=${@my.blog.Constants.SystemConstants@LOGIC_DELETE_VALUE},update_by=#{personid},update_time=#{time}
+
+where id
+in
+<foreach collection="id" item="item" open="(" close=")" separator=",">
+    #{item}
+</foreach>
+
+    </update>
+    <!--    <select id="getArticleList" resultType="my.blog.domain.Vo.ArticleListvo">-->
+<!--      select  sg_article.id ,title ,summary, name as categoryName, thumbnail, view_count as  viewCount, sg_article.create_time as createTime from sg_article,sg_category-->
+<!--      <where>-->
+<!--          <if test=" categoryId!=null and  categoryId>0">-->
+<!--              category_id=#{categoryId}-->
+<!--          </if>-->
+<!--      and sg_article.status=0 and  category_id=sg_category.id and sg_article.del_flag=0-->
+<!--      order by is_top-->
+
+<!--      </where>-->
+
+<!--    -->
+<!--    </select>-->
+
+    <select id="getArticleList" resultType="my.blog.domain.Vo.ArticleListvo">
+
+              select  sg_article.id ,is_top,title ,summary, name as categoryName, thumbnail, view_count as  viewCount, sg_article.create_time as createTime from sg_article,sg_category
+              <where>
+                  <if test="categoryId!=null and categoryId>0">
+                      category_id=#{categoryId}
+                  </if>
+              and sg_article.status=${@my.blog.Constants.SystemConstants@ARTICLE_STATUS_NORMAL} and  category_id=sg_category.id and sg_article.del_flag=${@my.blog.Constants.SystemConstants@LOGIC_NOT_DELETE_VALUE}
+              order by is_top ,viewCount Desc
+              </where>
+
+
+
+    </select>
+</mapper>
